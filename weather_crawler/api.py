@@ -8,15 +8,19 @@ from datetime import datetime, timedelta
 from google.cloud import storage
 from google.api_core.exceptions import ClientError
 
+from typing import Tuple
+
 from .decorators import request_with_restries
 
 router = APIRouter(prefix="/v1")
 
 TOKEN = os.environ["CWA_AUTH_TOKEN"]
 
+CWA_WEATHER_URL = "https://opendata.cwa.gov.tw"
+
 
 @request_with_restries
-async def get_data(url: str):
+async def get_data(url: str) -> Tuple[int, str]:
 
     header = {"Content-Type": "application/json"}
 
@@ -34,7 +38,9 @@ async def get_data(url: str):
 
 
 @router.get("/weather", status_code=200)
-async def get_weather_data(): ...
+async def get_weather_data():
+
+    url = f"{CWA_WEATHER_URL}/api/v1/rest/datastore/O-A0003-001"
 
 
 @router.get("/weather_station", status_code=200)
