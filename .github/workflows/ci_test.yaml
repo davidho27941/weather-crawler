@@ -1,5 +1,10 @@
 name: CI Workflow
 
+on:
+  push:
+    branches:
+      - "**"
+
 jobs:
   ci_check:
     runs-on: ubuntu-latest
