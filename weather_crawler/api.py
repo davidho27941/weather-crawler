@@ -2,7 +2,7 @@ import os
 import json
 import aiohttp
 
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, BackgroundTasks
 from datetime import datetime, timedelta
 
 from google.cloud import storage
