@@ -71,7 +71,7 @@ async def get_weather_station_info(stn_type: str, background_tasks: BackgroundTa
         case "manned":
             endpoint = "/api/v1/rest/datastore/C-B0074-001"
         case "unmanned":
-            endpoint = "/api/v1/rest/datastore/O-B0074-002"
+            endpoint = "/api/v1/rest/datastore/C-B0074-002"
         case _:
             raise ValueError(f"Provided argument {type} is invalid.")
 
