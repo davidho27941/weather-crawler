@@ -36,12 +36,16 @@ async def get_data(url: str) -> Tuple[int, str]:
 
     header = {"Content-Type": "application/json"}
 
+    logger.info(f"Starting to fetch data from {url}.")
+
     url = f"{url}?Authorization={TOKEN}"
 
     async with aiohttp.ClientSession() as session:
         async with session.get(url, headers=header) as response:
             status_code = response.status
             response_text = await response.text()
+
+    logger.info("Finished.")
 
     return status_code, response_text
 
