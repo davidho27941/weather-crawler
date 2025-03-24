@@ -8,9 +8,29 @@ from datetime import datetime, timedelta
 from google.cloud import storage
 from google.api_core.exceptions import ClientError
 
+from .decorators import request_with_restries
+
 router = APIRouter(prefix="/v1")
 
 TOKEN = os.environ["CWA_AUTH_TOKEN"]
+
+
+@request_with_restries
+async def get_data(url: str):
+
+    header = {"Content-Type": "application/json"}
+
+    data = {
+        "Authorization": f"{TOKEN}",
+        "format": "JSON",
+    }
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url, headers=header, data=data) as response:
+            status_code = response.status
+            response_text = await response.text()
+
+    return status_code, response_text
 
 
 @router.get("/weather", status_code=200)
