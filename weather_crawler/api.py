@@ -73,7 +73,7 @@ async def get_weather_station_info(stn_type: str, background_tasks: BackgroundTa
         case "unmanned":
             endpoint = "/api/v1/rest/datastore/C-B0074-002"
         case _:
-            raise ValueError(f"Provided argument {type} is invalid.")
+            raise ValueError(f"Provided argument {stn_type} is invalid.")
 
     url = f"{CWA_WEATHER_URL}/{endpoint}"
 
