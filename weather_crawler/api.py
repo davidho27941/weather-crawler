@@ -85,7 +85,7 @@ async def get_weather_station_info(stn_type: str, background_tasks: BackgroundTa
 
     data = add_ingestion_time(responce_text, full_date)
 
-    blob_name = f"weather_station/{type}/{date}/{date_hhmm}.json"
+    blob_name = f"weather_station/{stn_type}/{date}/{date_hhmm}.json"
 
     background_tasks.add_task(upload_gcs, data, GCS_BUCKET, blob_name)
 
