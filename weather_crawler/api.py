@@ -1,6 +1,16 @@
+import os
+import json
+import aiohttp
+
 from fastapi import FastAPI, APIRouter
+from datetime import datetime, timedelta
+
+from google.cloud import storage
+from google.api_core.exceptions import ClientError
 
 router = APIRouter(prefix="/v1")
+
+TOKEN = os.environ["CWA_AUTH_TOKEN"]
 
 
 @router.get("/weather", status_code=200)
