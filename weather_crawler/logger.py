@@ -18,7 +18,7 @@ def get_logger(name):
                 "handlers": ["console", "file"],
                 "propagate": False,
             },
-            "drtoys_etl": {
+            "weather_crawler": {
                 "level": "INFO",
                 "handlers": ["console", "file"],
                 "propagate": False,
