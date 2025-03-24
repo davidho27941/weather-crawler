@@ -29,7 +29,7 @@ def get_logger(name):
             "file": {
                 "class": "logging.FileHandler",
                 "formatter": "detailed",
-                "filename": "drtoys-etl.log",
+                "filename": "weather_crawler.log",
             },
         },
         "formatters": {
