@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - "**"
+    branches-ignore:
+      - main  # 忽略 main 分支上的 push
   pull_request:
     types: [closed]
 
