@@ -18,3 +18,21 @@ jobs:
     - uses: pre-commit/action@v3.0.1
     - uses: pre-commit-ci/lite-action@v1.1.0
       if: always()
+
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: actions/setup-python@v4
+      with:
+        python-version: 3.12
+
+    - name: Install dependencies
+      run: pip install uv pytest && uv pip install --system -r requirements.txt
+
+    - name: Install package
+      run: pip install -e .
+
+    - name: Run pytest
+      run: pytest -s test/
