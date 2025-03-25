@@ -36,3 +36,7 @@ jobs:
 
     - name: Run pytest
       run: pytest -s test/
+      env:
+        GCP_PROJECT_ID: ""
+        GCS_BUCKET: ""
+        CWA_AUTH_TOKEN: ""
