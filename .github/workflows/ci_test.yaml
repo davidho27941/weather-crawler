@@ -11,6 +11,7 @@ on:
 
 jobs:
   pre-commit:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -24,6 +25,7 @@ jobs:
       if: always()
 
   pytest:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
