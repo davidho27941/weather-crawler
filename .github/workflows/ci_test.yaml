@@ -48,4 +48,4 @@ jobs:
     if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
-    - run: echo "This is a deploy event."
+    - run: echo "This is a deploy event. "
