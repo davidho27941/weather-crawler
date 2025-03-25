@@ -53,6 +53,8 @@ async def get_data(url: str) -> Tuple[int, str]:
 @router.get("/weather", status_code=200)
 async def get_weather_data(background_tasks: BackgroundTasks):
 
+    logger.info("`weather` endpoint has been triggered.")
+
     url = f"{CWA_WEATHER_URL}/api/v1/rest/datastore/O-A0003-001"
 
     status_code, responce_text = await get_data(url)
@@ -67,9 +69,13 @@ async def get_weather_data(background_tasks: BackgroundTasks):
 
     background_tasks.add_task(upload_gcs, data, GCS_BUCKET, blob_name)
 
+    logger.info("Request complete.")
+
 
 @router.get("/weather_station", status_code=200)
 async def get_weather_station_info(stn_type: str, background_tasks: BackgroundTasks):
+
+    logger.info(f"`weather_station` endpoint has been triggered with {stn_type} type.")
 
     match stn_type:
         case "manned":
@@ -93,9 +99,13 @@ async def get_weather_station_info(stn_type: str, background_tasks: BackgroundTa
 
     background_tasks.add_task(upload_gcs, data, GCS_BUCKET, blob_name)
 
+    logger.info("Request complete.")
+
 
 @router.get("/rain_fall_station", status_code=200)
 async def get_rain_fall_station_data(background_tasks: BackgroundTasks):
+
+    logger.info(f"`rain_fall_station` endpoint has been triggered.")
 
     endpoint = "/api/v1/TaiwanRainfallStationInformationType"
 
@@ -112,3 +122,5 @@ async def get_rain_fall_station_data(background_tasks: BackgroundTasks):
     blob_name = f"rain_fall/{date}/{date_hhmm}.json"
 
     background_tasks.add_task(upload_gcs, data, GCS_BUCKET, blob_name)
+
+    logger.info("Request complete.")
