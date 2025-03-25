@@ -46,6 +46,7 @@ jobs:
         CWA_AUTH_TOKEN: ""
 
   deploy:
+    needs: [pre-commit, pytest]
     if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
