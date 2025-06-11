@@ -11,6 +11,7 @@ RUN uv pip install --system -r requirements.txt
 
 ENV GCP_PROJECT_ID=""
 ENV WEB_CONCURRENCY=8
+ENV CWA_AUTH_TOKEN=""
 
 EXPOSE 8888
 
