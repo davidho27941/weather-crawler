@@ -36,8 +36,6 @@ async def get_data(endpoint: str, source_type: str = "cwa") -> Tuple[int, str]:
 
     header = {"Content-Type": "application/json"}
 
-    logger.info(f"Starting to fetch data from {url}.")
-
     match source_type:
         case "cwa":
             url = f"{CWA_WEATHER_URL}/{endpoint}?Authorization={TOKEN}"
@@ -47,6 +45,8 @@ async def get_data(endpoint: str, source_type: str = "cwa") -> Tuple[int, str]:
 
         case _:
             raise ValueError("Provided source type not available.")
+
+    logger.info(f"Starting to fetch data from {url}.")
 
     async with aiohttp.ClientSession() as session:
         async with session.get(url, headers=header) as response:
