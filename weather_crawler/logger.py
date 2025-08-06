@@ -1,5 +1,6 @@
 import json
 import logging
+import traceback
 from logging import config
 
 
@@ -18,6 +19,8 @@ class JsonFormatter(logging.Formatter):
                     parts.append(str(record.args))
             message = " ".join(parts)
 
+        message = message.rstrip("\n")
+
         log_record = {
             "timestamp": self.formatTime(record, self.datefmt),
             "name": record.name,
@@ -25,7 +28,8 @@ class JsonFormatter(logging.Formatter):
             "message": message,
         }
         if record.exc_info:
-            log_record["trace"] = self.formatException(record.exc_info)
+            trace_list = traceback.format_exception(*record.exc_info)
+            log_record["trace"] = [line.rstrip("\n") for line in trace_list]
         return json.dumps(log_record, ensure_ascii=False)
 
 
