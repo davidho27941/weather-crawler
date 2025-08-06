@@ -7,11 +7,22 @@ class JsonFormatter(logging.Formatter):
     """Format log records as JSON strings."""
 
     def format(self, record):  # type: ignore[override]
+        try:
+            message = record.getMessage()
+        except (TypeError, ValueError):
+            parts = [str(record.msg)]
+            if record.args:
+                if isinstance(record.args, tuple):
+                    parts.extend(str(a) for a in record.args)
+                else:
+                    parts.append(str(record.args))
+            message = " ".join(parts)
+
         log_record = {
             "timestamp": self.formatTime(record, self.datefmt),
             "name": record.name,
             "level": record.levelname,
-            "message": record.getMessage(),
+            "message": message,
         }
         if record.exc_info:
             log_record["trace"] = self.formatException(record.exc_info)

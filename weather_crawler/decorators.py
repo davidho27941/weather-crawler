@@ -20,16 +20,20 @@ def request_with_restries(func):
 
             if status_code == 200:
 
-                logger.info(f"Request succeed without error.")
+                logger.info("Request succeed without error.")
 
                 break
             else:
                 logger.warning(
-                    f"Error Occured!\n",
-                    f"Status Code: {status_code}\n",
-                    f"Response Message: {response_text}.\n",
-                    f"Retrying! (number of retries: {N_RETRIES}/{MAX_RETRIES_COUNT})\n",
-                    f"Retry after {retry_delay_offset}s\n",
+                    "\n".join(
+                        [
+                            "Error Occured!",
+                            f"Status Code: {status_code}",
+                            f"Response Message: {response_text}.",
+                            f"Retrying! (number of retries: {N_RETRIES}/{MAX_RETRIES_COUNT})",
+                            f"Retry after {retry_delay_offset}s",
+                        ]
+                    )
                 )
 
                 retry_delay_offset += retry_delay_offset
@@ -38,12 +42,16 @@ def request_with_restries(func):
 
         else:
             logger.error(
-                f"Error Occured!\n",
-                f"Request's retries Limit reached.\n",
-                f"Status Code: {status_code}\n",
-                f"Response Message: {response_text}.\n",
-                f"Arguments: {args}\n",
-                f"Keyword Arguments: {kwargs}\n",
+                "\n".join(
+                    [
+                        "Error Occured!",
+                        "Request's retries Limit reached.",
+                        f"Status Code: {status_code}",
+                        f"Response Message: {response_text}.",
+                        f"Arguments: {args}",
+                        f"Keyword Arguments: {kwargs}",
+                    ]
+                )
             )
             raise RuntimeError(f"Retry limit reached!")
 

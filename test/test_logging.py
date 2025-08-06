@@ -38,3 +38,18 @@ def test_json_formatter_includes_trace():
     data = json.loads(formatter.format(record))
     assert data["message"] == "fail"
     assert "trace" in data and "RuntimeError" in data["trace"]
+
+
+def test_json_formatter_handles_extra_args():
+    formatter = JsonFormatter()
+    record = logging.LogRecord(
+        name="test",
+        level=logging.INFO,
+        pathname=__file__,
+        lineno=50,
+        msg="hello",
+        args=("world",),
+        exc_info=None,
+    )
+    data = json.loads(formatter.format(record))
+    assert data["message"] == "hello world"

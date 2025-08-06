@@ -12,9 +12,9 @@ GCP_PROJECT = os.environ["GCP_PROJECT_ID"]
 def upload_gcs(data: str, bucket_name: str, blob_name: str):
 
     logger.info(
-        f"Background task triggered with following arguments:",
-        f"{bucket_name=}\n",
-        f"{blob_name=}\n",
+        "Background task triggered with following arguments:\n"
+        f"{bucket_name=}\n"
+        f"{blob_name=}\n"
     )
 
     client = storage.Client(project=GCP_PROJECT)
