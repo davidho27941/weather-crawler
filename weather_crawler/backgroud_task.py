@@ -1,9 +1,6 @@
 import os
 
 from google.cloud import storage
-from google.api_core.exceptions import ClientError
-
-from typing import Any
 
 from .logger import get_logger
 
@@ -15,9 +12,9 @@ GCP_PROJECT = os.environ["GCP_PROJECT_ID"]
 def upload_gcs(data: str, bucket_name: str, blob_name: str):
 
     logger.info(
-        f"Background task triggered with following arguments:"
+        "Background task triggered with following arguments:\n"
         f"{bucket_name=}\n"
-        f"{blob_name=}\n",
+        f"{blob_name=}\n"
     )
 
     client = storage.Client(project=GCP_PROJECT)
@@ -28,11 +25,10 @@ def upload_gcs(data: str, bucket_name: str, blob_name: str):
 
     try:
         blob.upload_from_string(data)
-    except Exception as e:
-        logger.error(
-            f"An error occured when uploading data to {bucket_name} with blob name: {blob_name}.\n"
-            f"Exception: {e}\n"
+    except Exception:
+        logger.exception(
+            f"An error occured when uploading data to {bucket_name} with blob name: {blob_name}."
         )
-        raise e
+        raise
     else:
         logger.info("Upload task succeed.")
