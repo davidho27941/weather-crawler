@@ -8,7 +8,7 @@ os.environ.setdefault("GCS_BUCKET", "test-bucket")
 os.environ.setdefault("GCP_PROJECT_ID", "test-project")
 
 # Provide a minimal stub for google.cloud.storage used in backgroud_task
-if 'google.cloud.storage' not in sys.modules:
+if "google.cloud.storage" not in sys.modules:
     google = types.ModuleType("google")
     cloud = types.ModuleType("cloud")
     storage = types.ModuleType("storage")
@@ -32,6 +32,6 @@ if 'google.cloud.storage' not in sys.modules:
     cloud.storage = storage
     google.cloud = cloud
 
-    sys.modules['google'] = google
-    sys.modules['google.cloud'] = cloud
-    sys.modules['google.cloud.storage'] = storage
+    sys.modules["google"] = google
+    sys.modules["google.cloud"] = cloud
+    sys.modules["google.cloud.storage"] = storage
