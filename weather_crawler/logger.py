@@ -1,9 +1,24 @@
+import json
 import logging
 from logging import config
 
 
-def get_logger(name):
+class JsonFormatter(logging.Formatter):
+    """Format log records as JSON strings."""
 
+    def format(self, record):  # type: ignore[override]
+        log_record = {
+            "timestamp": self.formatTime(record, self.datefmt),
+            "name": record.name,
+            "level": record.levelname,
+            "message": record.getMessage(),
+        }
+        if record.exc_info:
+            log_record["trace"] = self.formatException(record.exc_info)
+        return json.dumps(log_record, ensure_ascii=False)
+
+
+def get_logger(name):
     logging_config = {
         "version": 1,
         "disable_existing_loggers": False,
@@ -25,16 +40,18 @@ def get_logger(name):
             },
         },
         "handlers": {
-            "console": {"class": "logging.StreamHandler", "formatter": "detailed"},
+            "console": {"class": "logging.StreamHandler", "formatter": "json"},
             "file": {
                 "class": "logging.FileHandler",
-                "formatter": "detailed",
+                "formatter": "json",
                 "filename": "weather_crawler.log",
+                "encoding": "utf-8",
             },
         },
         "formatters": {
-            "detailed": {
-                "format": "%(asctime)s %(name)-15s %(levelname)-8s %(message)s"
+            "json": {
+                "()": JsonFormatter,
+                "datefmt": "%Y-%m-%dT%H:%M:%S%z",
             }
         },
     }

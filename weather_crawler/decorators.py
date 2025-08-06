@@ -1,8 +1,9 @@
 import asyncio
-import logging
 import functools
 
-logger = logging.getLogger(__name__)
+from .logger import get_logger
+
+logger = get_logger(__name__)
 
 
 def request_with_restries(func):
@@ -24,10 +25,10 @@ def request_with_restries(func):
                 break
             else:
                 logger.warning(
-                    f"Error Occured!\n"
-                    f"Status Code: {status_code}\n"
-                    f"Response Message: {response_text}.\n"
-                    f"Retrying! (number of retries: {N_RETRIES}/{MAX_RETRIES_COUNT})\n"
+                    f"Error Occured!\n",
+                    f"Status Code: {status_code}\n",
+                    f"Response Message: {response_text}.\n",
+                    f"Retrying! (number of retries: {N_RETRIES}/{MAX_RETRIES_COUNT})\n",
                     f"Retry after {retry_delay_offset}s\n",
                 )
 
@@ -37,10 +38,10 @@ def request_with_restries(func):
 
         else:
             logger.error(
-                f"Error Occured!\n"
-                f"Request's retries Limit reached.\n"
-                f"Status Code: {status_code}\n"
-                f"Response Message: {response_text}.\n"
+                f"Error Occured!\n",
+                f"Request's retries Limit reached.\n",
+                f"Status Code: {status_code}\n",
+                f"Response Message: {response_text}.\n",
                 f"Arguments: {args}\n",
                 f"Keyword Arguments: {kwargs}\n",
             )
