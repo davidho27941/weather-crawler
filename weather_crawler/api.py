@@ -41,7 +41,7 @@ async def get_data(endpoint: str, source_type: str = "cwa") -> Tuple[int, str]:
             url = f"{CWA_WEATHER_URL}/{endpoint}?Authorization={TOKEN}"
 
         case "agri":
-            url = f"{CWA_WEATHER_URL}/{endpoint}"
+            url = f"{AGRI_RAIN_FALL_URL}/{endpoint}"
 
         case _:
             raise ValueError("Provided source type not available.")
