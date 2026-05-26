@@ -6,7 +6,8 @@ on:
       - main  # 忽略 main 分支上的 push
   pull_request:
     types: [closed]
-
+  workflow_dispatch:
+  
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
