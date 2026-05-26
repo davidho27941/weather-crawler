@@ -33,7 +33,7 @@ jobs:
         CWA_AUTH_TOKEN: ""
 
   deploy:
-    needs: [pre-commit, pytest]
+    needs: [pytest]
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
