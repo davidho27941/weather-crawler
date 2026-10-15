@@ -31,22 +31,36 @@ def add_ingestion_time(data: str, full_date: str) -> str:
     return json.dumps(data)
 
 
+def build_url(endpoint: str, source_type: str = "cwa") -> str:
+    """Join the source's base URL with ``endpoint``.
+
+    ``endpoint`` may be given with or without a leading slash; the result never
+    contains an empty path segment (``//``), which strict servers (e.g. Jetty 12)
+    reject with ``400 Ambiguous URI empty segment``.
+    """
+
+    path = "/" + endpoint.lstrip("/")
+
+    match source_type:
+        case "cwa":
+            return f"{CWA_WEATHER_URL}{path}?Authorization={TOKEN}"
+
+        case "agri":
+            return f"{AGRI_RAIN_FALL_URL}{path}"
+
+        case _:
+            raise ValueError("Provided source type not available.")
+
+
 @request_with_restries
 async def get_data(endpoint: str, source_type: str = "cwa") -> Tuple[int, str]:
 
     header = {"Content-Type": "application/json"}
 
-    match source_type:
-        case "cwa":
-            url = f"{CWA_WEATHER_URL}/{endpoint}?Authorization={TOKEN}"
+    url = build_url(endpoint, source_type)
 
-        case "agri":
-            url = f"{AGRI_RAIN_FALL_URL}/{endpoint}"
-
-        case _:
-            raise ValueError("Provided source type not available.")
-
-    logger.info(f"Starting to fetch data from {url}.")
+    # Log the endpoint only: the CWA URL carries the auth token as a query param.
+    logger.info(f"Starting to fetch data from {source_type} endpoint {endpoint}.")
 
     async with aiohttp.ClientSession() as session:
         async with session.get(url, headers=header) as response:
