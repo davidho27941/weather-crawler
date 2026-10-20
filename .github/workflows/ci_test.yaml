@@ -74,7 +74,7 @@ jobs:
           --cpu 1 \
           --memory 1Gi \
           --port 8888 \
-          --set-secrets CWA_AUTH_TOKEN=codis-api-token:1 \
+          --set-secrets CWA_AUTH_TOKEN=codis-api-token:2 \
           --set-env-vars "GCP_PROJECT_ID=side-project-staging,GCS_BUCKET=side-project-weather-data" \
           --max-instances 1 \
           --min-instances 0
