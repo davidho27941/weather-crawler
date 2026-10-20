@@ -7,7 +7,7 @@ on:
   pull_request:
     types: [closed]
   workflow_dispatch:
-  
+
 jobs:
 
   pytest:
@@ -34,7 +34,9 @@ jobs:
 
   deploy:
     needs: [pytest]
-    # if: github.event.pull_request.merged == true
+    # Deploy to production only from a merged PR or a manual dispatch.
+    # Pushes to feature branches run pytest only.
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
